@@ -1,0 +1,25 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine",
+    "start": "nodemon ./index.js --exec babel-node -e js"
+  },
+  "author": "christian.franco@sap.com",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.2",
+    "mongoose": "^5.10.8",
+    "nodemon": "^2.0.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "jasmine": "^3.6.1"
+  }
+}
