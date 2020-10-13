@@ -3,7 +3,14 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 mongoose.set('useFindAndModify', false);
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+before(async () => {
+    await connectDB();
+});
+
+after(async () => {
+    await clearDB();
+    await disconnectDB();
+});
 
 function connectDB() {
     if (mongoose.connection.readyState === 1) {
@@ -15,11 +22,11 @@ function connectDB() {
         useNewUrlParser: true,
         useCreateIndex: true,
         useUnifiedTopology: true,
-    })
+    }).then(() => console.log("\n## DB connected...\n"));
 }
 
 function clearDB() {
-   return mongoose.connection.db.dropDatabase();
+    return mongoose.connection.db.dropDatabase();
 }
 
 function disconnectDB() {
@@ -28,7 +35,7 @@ function disconnectDB() {
         return;
     }
 
-    return mongoose.disconnect();
+    return mongoose.disconnect().then(() => console.log("\n## DB disconnected...\n"));
 }
 
-module.exports = {connectDB, disconnectDB, clearDB};
+module.exports = { clearDB };

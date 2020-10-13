@@ -10,7 +10,7 @@ const StockLevel = mongoose.model("StockLevel", StockLevelSchema);
  * @returns Promise<StockLevel>
  */
 function save(stockLevelData) {
-    let newStockLevel = new StockLevel(stockLevelData);
+    const newStockLevel = new StockLevel(stockLevelData);
 
     return newStockLevel.save();
 }
@@ -23,8 +23,8 @@ function save(stockLevelData) {
  * @returns Promise<StockLevel>
  */
 function update(name, quantity) {
-    let filter = buildStockLevelByName(name);
-    let toUpdate = buildStockLevel(name, quantity, Date.now());
+    const filter = buildStockLevelByName(name);
+    const toUpdate = buildStockLevel(name, quantity, Date.now());
 
     return StockLevel.findOneAndUpdate(filter, toUpdate, { new: true });
 }
@@ -36,7 +36,7 @@ function update(name, quantity) {
  * @returns Promise<StockLevel>
  */
 function findByName(name) {
-    let filter = buildStockLevelByName(name);
+    const filter = buildStockLevelByName(name);
 
     return StockLevel.findOne(filter);
 }

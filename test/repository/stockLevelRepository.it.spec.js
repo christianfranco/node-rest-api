@@ -2,23 +2,23 @@ const integrationTest = require("../integrationTest");
 const stockLevelRepository = require('../../src/repository/stockLevelRepository');
 const { buildStockLevel } = require('../../src/model/stockLevel');
 
-describe('Integration Tests DB: ', () => {
-    beforeAll(async () => {
-        await integrationTest.connectDB();
-    });
+const chai = require('chai');
+const should = chai.should();
+const { expect } = chai;
 
-    afterAll(async () => {
+describe('Integration Tests DB: ', () => {
+
+    beforeEach(async () => {
         await integrationTest.clearDB();
-        await integrationTest.disconnectDB();
     });
 
     it('Save', async () => {
         let lastUpdate = new Date(Date.now());
         let saved = await stockLevelRepository.save(buildStockLevel("Test1", 10, lastUpdate));
 
-        expect(saved['productName']).toBe('Test1');
-        expect(saved['quantity']).toBe(10);
-        expect(new Date(saved['lastUpdate']).getTime()).toEqual(lastUpdate.getTime());
+        expect(saved['productName']).to.equal('Test1');
+        expect(saved['quantity']).to.equal(10);
+        expect(new Date(saved['lastUpdate']).getTime()).to.equal(lastUpdate.getTime());
     });
 
     it("Update", async () => {
@@ -26,8 +26,8 @@ describe('Integration Tests DB: ', () => {
 
         let updatedStock = await stockLevelRepository.update("Test2", 40);
 
-        expect(updatedStock.productName).toBe('Test2');
-        expect(updatedStock.quantity).toBe(40);
+        expect(updatedStock.productName).to.equal('Test2');
+        expect(updatedStock.quantity).to.equal(40);
     });
 
     it("find by name", async () => {
@@ -35,6 +35,6 @@ describe('Integration Tests DB: ', () => {
 
         let updatedStock = await stockLevelRepository.findByName("Test3");
 
-        expect(updatedStock.productName).toBe('Test3');
+        expect(updatedStock.productName).to.equal('Test3');
     });
 });

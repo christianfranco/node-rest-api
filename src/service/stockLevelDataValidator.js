@@ -1,5 +1,11 @@
 const CHAIN = [validateEmpty, validateProductNameProperty, validateNameLength, validateQuantity];
 
+const NAME_MIN = 3;
+const NAME_MAX = 60;
+
+const QUANTITY_MIN = 0;
+const QUANTITY_MAX = 20000000;
+
 function validateStockLevelData(stockLevelData) {
     CHAIN.forEach((validate) => validate(stockLevelData));
 }
@@ -13,13 +19,13 @@ function validateProductNameProperty(stockLevelData) {
 }
 
 function validateNameLength(stockLevelData) {
-    var name = stockLevelData.productName;
-    if (!name || !(name.length >= 3 && name.length <= 60)) throw new Error('ProductName length must be between 3 and 60.');
+    const name = stockLevelData.productName;
+    if (!name || !(name.length >= NAME_MIN && name.length <= NAME_MAX)) throw new Error('ProductName length must be between 3 and 60.');
 }
 
 function validateQuantity(stockLevelData) {
-    var quantity = stockLevelData.quantity;
-    if (!quantity || !(quantity >= 0 && quantity <= 20000000)) throw new Error('Quantity must be between 0 and 20_000_000.');
+    const quantity = stockLevelData.quantity;
+    if (!quantity || !(quantity >= QUANTITY_MIN && quantity <= QUANTITY_MAX)) throw new Error('Quantity must be between 0 and 20_000_000.');
 }
 
 module.exports = { validateStockLevelData };

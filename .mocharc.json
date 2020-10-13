@@ -1,0 +1,15 @@
+{
+  "diff": true,
+  "extension": [
+    "js"
+  ],
+  "package": "./package.json",
+  "reporter": "spec",
+  "slow": 75,
+  "timeout": 10000,
+  "ui": "bdd",
+  "watch-files": [
+    "test/integrationTest.js",
+    "test/**/*.test.js"
+  ]
+}

@@ -11,7 +11,10 @@ function createStockLevel(stockLevelData) {
     stockLevelDataValidor.validateStockLevelData(stockLevelData);
 
     return stockLevelRepository.save(stockLevelData)
-        .catch(err => { throw new Error(`Error to save stock ${stockLevelData}`) });
+        .catch(err => {
+            console.error(err);
+            throw new Error(`Error to save stock ${stockLevelData}`);
+        });
 }
 
 module.exports = { createStockLevel };

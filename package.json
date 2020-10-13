@@ -2,10 +2,11 @@
   "name": "back-end",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "jasmine",
-    "start": "nodemon ./index.js --exec babel-node -e js"
+    "test": "PORT=4200 mocha -- --recursive",
+    "eslint": "eslint",
+    "start": "nodemon ./app.js --exec babel-node -e js"
   },
   "author": "christian.franco@sap.com",
   "license": "MIT",
@@ -20,6 +21,9 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
-    "jasmine": "^3.6.1"
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^7.11.0",
+    "mocha": "^8.1.3"
   }
 }

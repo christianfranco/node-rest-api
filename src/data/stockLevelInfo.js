@@ -21,7 +21,7 @@ function mapStockLevelInfo(stockLevel) {
 }
 
 function calculateAvailability(quantity) {
-    var level;
+    let level;
 
     switch (true) {
         case (quantity <= 0):
