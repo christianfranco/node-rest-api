@@ -9,7 +9,7 @@
   "timeout": 10000,
   "ui": "bdd",
   "watch-files": [
-    "test/integrationTest.js",
+    "test/bootstrap.js",
     "test/**/*.test.js"
   ]
 }

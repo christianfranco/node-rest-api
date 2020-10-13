@@ -3,7 +3,6 @@ const { StockLevel, buildStockLevel } = require('../../src/model/stockLevel');
 const STOCK_AVAILABILITY = stockLevelInfo.STOCK_AVAILABILITY;
 
 const chai = require('chai');
-const should = chai.should();
 const { expect } = chai;
 
 describe('Test Stock Availability State Machine', () => {

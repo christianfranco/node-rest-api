@@ -1,17 +1,10 @@
-const integrationTest = require("../integrationTest");
 const stockLevelRepository = require('../../src/repository/stockLevelRepository');
 const { buildStockLevel } = require('../../src/model/stockLevel');
 
 const chai = require('chai');
-const should = chai.should();
 const { expect } = chai;
 
 describe('Integration Tests DB: ', () => {
-
-    beforeEach(async () => {
-        await integrationTest.clearDB();
-    });
-
     it('Save', async () => {
         let lastUpdate = new Date(Date.now());
         let saved = await stockLevelRepository.save(buildStockLevel("Test1", 10, lastUpdate));

@@ -1,24 +1,31 @@
-import bodyParser from "body-parser";
-import express, { Router } from "express";
-import mongoose from "mongoose";
-import routes from "./src/route/routes";
+const bodyParser = require("body-parser");
+const express = require("express");
+const mongoose = require("mongoose");
+const routes = require("./src/route/routes");
 
-const APP = express();
-const PORT = 4000;
+const app = express();
+const port = 4000;
 
 mongoose.Promise = global.Promise;
 mongoose.set('useFindAndModify', false);
-mongoose.connect('mongodb://localhost/stockDEV', {
+
+const dbConnection = mongoose.connect('mongodb://localhost/stockDEV', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-}).then( () => console.log("MongoDB connected..."));
+}).then(() => console.log("MongoDB connected..."));
 
-APP.use(bodyParser.urlencoded({ extended: true }));
-APP.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-routes.routes(APP);
+routes.routes(app);
 
-APP.listen(PORT, () =>
-    console.log(`Server running on port ${PORT}`)
+const server = app.listen(port, () =>
+    console.log(`Server running on port ${port}`)
 );
+
+function stop() {
+    server.close();
+}
+
+module.exports = { app, stop, dbConnection }

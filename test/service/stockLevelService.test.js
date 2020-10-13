@@ -1,16 +1,10 @@
-const integrationTest = require("../integrationTest");
 const stockLevelService = require('../../src/service/stockLevelService');
 const { buildStockLevel } = require('../../src/model/stockLevel');
 
 const chai = require('chai');
-const should = chai.should();
 const { expect } = chai;
 
 describe('Test stockLevelService create: ', () => {
-    beforeEach(async () => {
-        await integrationTest.clearDB();
-    });
-
     it('success', async () => {
         let newStock = await stockLevelService.createStockLevel(buildStockLevel("Test", 30, Date.now()));
 
