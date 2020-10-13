@@ -5,7 +5,7 @@ const routes = (app) => {
         .post(stockLevelController.createStockLevel);
 
     app.get('/', (req, res) =>
-        res.send(`Node and Express server runnig on port ${PORT}`)
+        res.send('Node and Express server runnig...')
     );
 
 };
