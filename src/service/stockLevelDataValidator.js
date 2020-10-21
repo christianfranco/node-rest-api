@@ -24,7 +24,6 @@ function validateNameLength(stockLevelData) {
 }
 
 function validateQuantity(stockLevelData) {
-    const quantity = stockLevelData.quantity;
     validateQuantityNumber(stockLevelData.quantity)
 }
 

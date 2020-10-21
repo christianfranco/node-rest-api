@@ -24,7 +24,7 @@ function deleteStockLevel(productName) {
     return stockLevelRepository.deleteProduct(productName)
         .catch(err => {
             logger.error(err);
-            throw new Error(`Error to delete stock ${stockLevelData}`);
+            throw new Error(`Error to delete stock ${productName}`);
         });
 }
 
@@ -35,7 +35,7 @@ function updateQuantity(productName, decreaseQuantity) {
     return stockLevelRepository.findByName(productName)
         .then(stockLevel => {
 
-            let newQuantity = stockLevel.quantity - decreaseQuantity;
+            const newQuantity = stockLevel.quantity - decreaseQuantity;
 
             if (newQuantity < 0) {
                 throw new Error("Decrease quantity invalid");
