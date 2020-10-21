@@ -1,5 +1,6 @@
 const stockLevelRepository = require('../repository/stockLevelRepository');
 const stockLevelDataValidor = require('../service/stockLevelDataValidator');
+const {logger} = require("../../configuration/loggerConfig");
 
 /**
  * Creates a new stock level
@@ -12,9 +13,44 @@ function createStockLevel(stockLevelData) {
 
     return stockLevelRepository.save(stockLevelData)
         .catch(err => {
-            console.error(err);
+            logger.error(err);
             throw new Error(`Error to save stock ${stockLevelData}`);
         });
 }
 
-module.exports = { createStockLevel };
+function deleteStockLevel(productName) {
+    stockLevelDataValidor.validateProdutName(productName);
+
+    return stockLevelRepository.deleteProduct(productName)
+        .catch(err => {
+            logger.error(err);
+            throw new Error(`Error to delete stock ${stockLevelData}`);
+        });
+}
+
+function updateQuantity(productName, decreaseQuantity) {
+    stockLevelDataValidor.validateProdutName(productName);
+    stockLevelDataValidor.validateQuantityNumber(decreaseQuantity);
+
+    return stockLevelRepository.findByName(productName)
+        .then(stockLevel => {
+
+            let newQuantity = stockLevel.quantity - decreaseQuantity;
+
+            if (newQuantity < 0) {
+                throw new Error("Decrease quantity invalid");
+            }
+
+            return stockLevelRepository.update(productName, newQuantity)
+                .catch(err => {
+                    logger.error(err);
+                    throw new Error(`Error to update stock level :${productName}`);
+                });
+        })
+        .catch(err => {
+            logger.error(err);
+            throw new Error(`Error to find stock level :${productName}`);
+        });
+}
+
+module.exports = { createStockLevel, deleteStockLevel, updateQuantity };

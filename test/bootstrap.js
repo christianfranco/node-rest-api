@@ -1,13 +1,12 @@
 const app = require('../app');
-
 const mongoose = require("mongoose");
+const {logger} = require("../configuration/loggerConfig");
 
 before((done) => {
-    app.dbConnection.then(() => done());
-});
-
-beforeEach(async () => {
-    await clearDB();
+    app.dbConnection.then(() => {
+        clearDB();
+        done();
+    });
 });
 
 after(async () => {
@@ -17,11 +16,11 @@ after(async () => {
 
 function disconnectDB() {
     if (mongoose.connection.readyState === 0) {
-        console.info("MongoDB already disconnected...");
+        logger.info("MongoDB already disconnected...");
         return;
     }
 
-    return mongoose.disconnect().then(() => console.log("\n## DB disconnected...\n"));
+    return mongoose.disconnect().then(() => logger.debug("\n## DB disconnected...\n"));
 }
 
 function clearDB() {

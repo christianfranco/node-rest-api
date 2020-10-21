@@ -1,12 +1,12 @@
 {
   "name": "back-end",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha --recursive",
+    "test": "NODE_ENV=test mocha --recursive",
     "eslint": "eslint",
-    "start": "nodemon ./app.js --exec babel-node -e js"
+    "start": "NODE_ENV=development nodemon ./app.js --exec babel-node -e js"
   },
   "author": "christian.franco@sap.com",
   "license": "MIT",
@@ -15,7 +15,8 @@
     "express": "^4.17.1",
     "mongodb": "^3.6.2",
     "mongoose": "^5.10.8",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

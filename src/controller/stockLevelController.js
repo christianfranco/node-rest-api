@@ -1,5 +1,6 @@
 const stockLevelService = require('../service/stockLevelService');
 const { buildInternalError } = require('../data/stockLevelError');
+const { logger } = require("../../configuration/loggerConfig");
 
 function createStockLevel(req, res) {
     const stockLevel = req.body;
@@ -10,11 +11,33 @@ function createStockLevel(req, res) {
                 res.status(200).json(stock);
             })
             .catch(err => {
-                res.status(500).send(buildInternalError(stockLevel, err));
+                error(err, res, stockLevel);
             });
     } catch (err) {
-        res.status(500).send(buildInternalError(stockLevel, err));
+        error(err, res, stockLevel);
     }
 }
 
-module.exports = { createStockLevel };
+function descreaseStockLevel(req, res) {
+    const stockLevel = req.body;
+
+    try {
+        stockLevelService.updateQuantity(stockLevel.productName, stockLevel.quantity)
+            .then(stock => {
+                logger.silly(`updated: ${stock}`);
+                res.status(200).json(stock);
+            })
+            .catch(err => {
+                error(err, res, stockLevel);
+            });
+    } catch (err) {
+        error(err, res, stockLevel);
+    }
+}
+
+function error(err, res, stockLevel) {
+    logger.error(err);
+    res.status(500).send(buildInternalError(stockLevel, err));
+}
+
+module.exports = { createStockLevel, descreaseStockLevel };

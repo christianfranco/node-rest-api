@@ -41,4 +41,15 @@ function findByName(name) {
     return StockLevel.findOne(filter);
 }
 
-module.exports = { save, update, findByName };
+/**
+ * Deletes a Stock Level by product name.
+ * 
+ * @param {string} name  product name
+ * @returns Promise<StockLevel>
+ */
+function deleteProduct(name) {
+    const filter = buildStockLevelByName(name);
+    return StockLevel.deleteMany(filter);
+}
+
+module.exports = { save, update, findByName, deleteProduct };

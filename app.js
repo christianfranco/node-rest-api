@@ -2,18 +2,24 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
 const routes = require("./src/route/routes");
-
+const config = require("./configuration/config");
 const app = express();
-const port = 4000;
+const environment = process.env.NODE_ENV;
+const {logger} = require("./configuration/loggerConfig");
+
+logger.info("environment: " + environment);
+
+const port = config[environment].PORT;
+const dbURL = config[environment].DB_URL;
 
 mongoose.Promise = global.Promise;
 mongoose.set('useFindAndModify', false);
 
-const dbConnection = mongoose.connect('mongodb://localhost/stockDEV', {
+const dbConnection = mongoose.connect(dbURL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-}).then(() => console.log("MongoDB connected..."));
+}).then(() => logger.debug("MongoDB connected..."));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -21,7 +27,7 @@ app.use(bodyParser.json());
 routes.routes(app);
 
 const server = app.listen(port, () =>
-    console.log(`Server running on port ${port}`)
+    logger.debug(`Server running on port ${port}`)
 );
 
 function stop() {
