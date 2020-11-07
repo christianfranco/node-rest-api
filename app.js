@@ -1,7 +1,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
-const routes = require("./src/route/routes");
+const productRoutes = require("./src/route/productRoutes");
 const config = require("./configuration/config");
 const app = express();
 const environment = process.env.NODE_ENV;
@@ -24,7 +24,7 @@ const dbConnection = mongoose.connect(dbURL, {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-routes.routes(app);
+productRoutes.routes(app);
 
 const server = app.listen(port, () =>
     logger.debug(`Server running on port ${port}`)

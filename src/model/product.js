@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const StockLevelSchema = new Schema({
+const ProductSchema = new Schema({
     productName: {
         type: String,
         unique: true,
@@ -26,9 +26,9 @@ const StockLevelSchema = new Schema({
     }
 });
 
-const StockLevel = mongoose.model("StockLevel", StockLevelSchema);
+const Product = mongoose.model("Product", ProductSchema);
 
-function buildStockLevel(name, quantity, lastUpdate) {
+function buildProduct(name, quantity, lastUpdate) {
     return {
         "productName": name,
         "quantity": quantity,
@@ -36,14 +36,14 @@ function buildStockLevel(name, quantity, lastUpdate) {
     }
 }
 
-function buildStockLevelByName(name) {
+function buildProductByName(name) {
     return {
         "productName": name
     }
 }
 
 module.exports = {
-    StockLevel: StockLevel,
-    buildStockLevel,
-    buildStockLevelByName
+    Product: Product,
+    buildProduct,
+    buildProductByName
 }

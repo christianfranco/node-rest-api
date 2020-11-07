@@ -1,5 +1,6 @@
-const { buildStockLevel } = require('../../src/model/stockLevel');
-const stockLevelService = require('../../src/service/stockLevelService');
+/*
+const { buildProduct } = require('../../src/model/product');
+const productService = require('../../src/service/productService');
 const { app } = require('../../app');
 
 const chai = require('chai');
@@ -8,13 +9,14 @@ const { expect } = chai;
 
 chai.use(chaiHTTP);
 
-describe('Test stockLevelController: ', () => {
-    it('post -> create stock', (done) => {
-        const stock = buildStockLevel('test3000', 20, Date.now());
+describe('Test productController: ', () => {
+    
+    it('post -> create product', (done) => {
+        const product = buildProduct('test3000', 20, Date.now());
 
         chai.request(app)
-            .post('/v1/stock-level')
-            .send(stock)
+            .post('/v1/product-level')
+            .send(product)
             .end((err, res) => {
                 done();
                 expect(res).to.have.status(200);
@@ -23,14 +25,14 @@ describe('Test stockLevelController: ', () => {
             });
     });
 
-    it('put -> update stock', (done) => {
-        const stock = buildStockLevel('test3000', 40, Date.now());
+    it('put -> update product', (done) => {
+        const product = buildProduct('test3000', 40, Date.now());
 
-        stockLevelService.createStockLevel(stock)
+        productService.createProduct(product)
             .then(() => {
                 chai.request(app)
-                    .put('/v1/stock-level')
-                    .send(buildStockLevel('test3000', 10, Date.now()))
+                    .put('/v1/product-level')
+                    .send(buildProduct('test3000', 10, Date.now()))
                     .end((err, res) => {
                         done();
                         expect(res).to.have.status(200);
@@ -38,5 +40,6 @@ describe('Test stockLevelController: ', () => {
                         expect(res.body.quantity).to.equals(30);
                     });
             });
-    })
+    });
 });
+*/
