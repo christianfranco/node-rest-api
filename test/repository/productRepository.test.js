@@ -5,8 +5,8 @@ const chai = require('chai');
 const { expect } = chai;
 const { v4: uuidv4 } = require('uuid');
 
-describe('Test Product Repository: ', () => {
-    it('Save', async () => {
+describe('ProductRepository -> CRUD ', () => {
+    it('should save', async () => {
         const name = uuidv4();
         const lastUpdate = new Date(Date.now());
         const saved = await productRepository.save(buildProduct(name, 10, lastUpdate));
@@ -16,7 +16,7 @@ describe('Test Product Repository: ', () => {
         expect(new Date(saved['lastUpdate']).getTime()).to.equal(lastUpdate.getTime());
     });
 
-    it("Update", async () => {
+    it("should update", async () => {
         const name = uuidv4();
 
         await productRepository.save(buildProduct(name, 20, Date.now()));
@@ -28,7 +28,7 @@ describe('Test Product Repository: ', () => {
         expect(updatedProduct.quantity).to.equal(40);
     });
 
-    it("find by name", async () => {
+    it("should find by name", async () => {
         const name = uuidv4();
 
         await productRepository.save(buildProduct(name, 50, Date.now()));
@@ -38,7 +38,7 @@ describe('Test Product Repository: ', () => {
         expect(updatedProduct.productName).to.equal(name);
     });
 
-    it("delete", async() => {
+    it("should delete", async() => {
         const name = uuidv4();
 
         await productRepository.save(buildProduct(name, 20, Date.now()));

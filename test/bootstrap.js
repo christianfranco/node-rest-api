@@ -26,5 +26,5 @@ function disconnectDB() {
 }
 
 function clearDB() {
-    return Product.remove({}, () => logger.info("\n##MongoDB :: product records removed..."));
+    return Product.deleteMany({}, () => logger.info("\n##MongoDB :: product records removed..."));
 }

@@ -8,22 +8,20 @@ function createProduct(req, res) {
     try {
         productService.createProduct(product)
             .then(product => res.status(200).json(product))
-            .catch(err => error(err, res, product));
+            .catch(err => sendHttpError(err, res, product));
     } catch (err) {
-        error(err, res, product);
+        sendHttpError(err, res, product);
     }
 }
 
 function descreaseProduct(req, res) {
     const product = req.body;
-
     try {
         productService.updateQuantity(product.productName, product.quantity)
-            .then(product => logger.silly(`updated: ${product}`))
             .then(product => res.status(200).json(product))
-            .catch(err => error(err, res, product));
+            .catch(err => sendHttpError(err, res, product));
     } catch (err) {
-        error(err, res, product);
+        sendHttpError(err, res, product);
     }
 }
 
@@ -32,10 +30,10 @@ function deleteProduct(req, res) {
 
     try {
         productService.deleteProduct(productName)
-            .then(() => res.status(200))
-            .catch(err => error(err, res, productName));
+            .then(() => res.status(200).send())
+            .catch(err => sendHttpError(err, res, productName));
     } catch (err) {
-        error(err, res, productName);
+        sendHttpError(err, res, productName);
     }
 }
 
@@ -45,13 +43,13 @@ function checkProduct(req, res) {
     try {
         productService.checkProduct(productName)
             .then(product => res.status(200).send(product))
-            .catch(err => error(err, res, productName));
+            .catch(err => sendHttpError(err, res, productName));
     } catch (err) {
-        error(err, res, productName);
+        sendHttpError(err, res, productName);
     }
 }
 
-function error(err, res, product) {
+function sendHttpError(err, res, product) {
     logger.error(err);
     res.status(500).send(buildInternalError(product, err));
 }

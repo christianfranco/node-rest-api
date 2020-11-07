@@ -1,45 +1,89 @@
-/*
 const { buildProduct } = require('../../src/model/product');
 const productService = require('../../src/service/productService');
 const { app } = require('../../app');
+const { v4: uuidv4 } = require('uuid');
 
 const chai = require('chai');
 const chaiHTTP = require('chai-http');
+const should = chai.should();
 const { expect } = chai;
 
 chai.use(chaiHTTP);
 
-describe('Test productController: ', () => {
-    
-    it('post -> create product', (done) => {
-        const product = buildProduct('test3000', 20, Date.now());
+describe('ProductContoller -> create product: ', () => {
+
+    it('Should create a new product', (done) => {
+        const name = uuidv4();
+        const product = buildProduct(name, 20, Date.now());
 
         chai.request(app)
-            .post('/v1/product-level')
+            .post('/v1/product')
             .send(product)
             .end((err, res) => {
-                done();
-                expect(res).to.have.status(200);
-                expect(res.body.productName).to.equals('test3000');
+                res.should.have.status(200);
+                res.should.be.json;
+                expect(res.body.productName).to.equals(name);
                 expect(res.body.quantity).to.equals(20);
+                done();
             });
     });
+});
 
-    it('put -> update product', (done) => {
-        const product = buildProduct('test3000', 40, Date.now());
+describe('ProductContoller -> decrease product quantity: ', () => {
+
+    it('Should update the quantity', (done) => {
+        const name = uuidv4();
+        const product = buildProduct(name, 40, Date.now());
 
         productService.createProduct(product)
             .then(() => {
                 chai.request(app)
-                    .put('/v1/product-level')
-                    .send(buildProduct('test3000', 10, Date.now()))
+                    .put('/v1/product/decrease/quantity')
+                    .send(buildProduct(name, 10, Date.now()))
                     .end((err, res) => {
+                        res.should.have.status(200);
+                        res.should.be.json;
+                        res.body.productName.should.equal(name);
+                        res.body.quantity.should.equal(30);
                         done();
-                        expect(res).to.have.status(200);
-                        expect(res.body.productName).to.equals('test3000');
-                        expect(res.body.quantity).to.equals(30);
                     });
             });
     });
 });
-*/
+
+describe('ProductContoller -> delete product: ', () => {
+
+    it('Should delete a product', (done) => {
+        const name = "chris"
+        const product = buildProduct(name, 40, Date.now());
+
+        productService.createProduct(product)
+            .then(() => {
+                chai.request(app)
+                    .delete(`/v1/product/${name}`)
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        done();
+                    });
+            });
+    });
+});
+
+describe('ProductContoller -> Get Product: ', () => {
+
+    it('Should get a product', (done) => {
+        const name = uuidv4();
+        const product = buildProduct(name, 40, Date.now());
+
+        productService.createProduct(product)
+            .then(() => {
+                chai.request(app)
+                    .get(`/v1/product/${name}`)
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.should.be.json;
+                        done();
+                    });
+            });
+    });
+});
