@@ -1,4 +1,5 @@
 const { buildProduct } = require('../../src/model/product');
+const productInfo = require('../../src/data/productInfo')
 const productService = require('../../src/service/productService');
 const { app } = require('../../app');
 const { v4: uuidv4 } = require('uuid');
@@ -22,8 +23,8 @@ describe('ProductContoller -> create product: ', () => {
             .end((err, res) => {
                 res.should.have.status(200);
                 res.should.be.json;
-                expect(res.body.productName).to.equals(name);
-                expect(res.body.quantity).to.equals(20);
+                res.body.productName.should.equal(name);
+                res.body.quantity.should.equal(20);
                 done();
             });
     });
@@ -82,6 +83,8 @@ describe('ProductContoller -> Get Product: ', () => {
                     .end((err, res) => {
                         res.should.have.status(200);
                         res.should.be.json;
+                        res.body.productName.should.equal(name);
+                        res.body.productAvailability.should.equal(productInfo.PRODUCT_AVAILABILITY.HIGH);
                         done();
                     });
             });

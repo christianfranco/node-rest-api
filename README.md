@@ -5,7 +5,6 @@
 * [Express](https://expressjs.com/)
 * [Mongoose](https://mongoosejs.com/)
 * [nodemon](https://www.npmjs.com/package/nodemon)
-* [Babel](https://babeljs.io/)
 * [Winston](https://www.npmjs.com/package/winston) 
 * [Body-parser](https://www.npmjs.com/package/body-parser) 
 
